@@ -1,2 +1,6 @@
-﻿// See https://aka.ms/new-console-template for more information
-Console.WriteLine("Hello, World!");
+﻿var config = new ConfigurationBuilder().AddUserSecrets<Program>().Build();
+string model = config["ModelName"];
+string key = config["OpenAIKey"];
+
+// Create the IChatClient
+IChatClient chatClient = new OpenAIClient(key).GetChatClient(model).AsIChatClient();
