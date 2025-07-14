@@ -9,10 +9,11 @@ using System.Text.Json;
 var config = new ConfigurationBuilder().AddUserSecrets<Program>().Build();
 string model = config["ModelName"] ?? string.Empty;
 string key = config["OpenAIKey"] ?? string.Empty;
+string url = config["Url"] ?? string.Empty;
 
 // Create the IChatClient
 var client = new AzureOpenAIClient(
-    new Uri("https://your-azure-openai-resource.com"), new ApiKeyCredential(key))
+    new Uri(url), new ApiKeyCredential(key))
     .GetChatClient(model);
 
 var prompt = ConstructPromptWithContext();
