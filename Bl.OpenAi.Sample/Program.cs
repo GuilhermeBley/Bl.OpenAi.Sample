@@ -1,4 +1,5 @@
-﻿using Azure.AI.OpenAI;
+﻿using Azure;
+using Azure.AI.OpenAI;
 using Azure.Identity;
 using Microsoft.Extensions.Configuration;
 using OpenAI;
@@ -13,7 +14,7 @@ string url = config["Url"] ?? string.Empty;
 
 // Create the IChatClient
 var client = new AzureOpenAIClient(
-    new Uri(url), new ApiKeyCredential(key))
+    new Uri(url), new AzureKeyCredential(key))
     .GetChatClient(model);
 
 var prompt = ConstructPromptWithContext();
@@ -21,7 +22,7 @@ var prompt = ConstructPromptWithContext();
 var chatCompletionsOptions = new ChatCompletionOptions()
 {
     Temperature = 0.7f,
-    MaxOutputTokenCount = 1000,
+    MaxOutputTokenCount = 1000
 };
 
 var response = await client.CompleteChatAsync(
