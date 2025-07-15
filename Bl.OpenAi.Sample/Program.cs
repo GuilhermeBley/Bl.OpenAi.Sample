@@ -1,10 +1,8 @@
 ﻿using Azure;
 using Azure.AI.OpenAI;
-using Azure.Identity;
+using Azure.AI.OpenAI.Chat;
 using Microsoft.Extensions.Configuration;
-using OpenAI;
 using OpenAI.Chat;
-using System.ClientModel;
 using System.Text.Json;
 
 var config = new ConfigurationBuilder().AddUserSecrets<Program>().Build();
@@ -13,17 +11,21 @@ string key = config["OpenAIKey"] ?? string.Empty;
 string url = config["Url"] ?? string.Empty;
 
 // Create the IChatClient
-var client = new AzureOpenAIClient(
-    new Uri(url), new AzureKeyCredential(key))
-    .GetChatClient(model);
+var clientOpenAi = new AzureOpenAIClient(
+    new Uri(url), 
+    new AzureKeyCredential(key));
+
+var client = clientOpenAi.GetChatClient(model);
 
 var prompt = ConstructPromptWithContext();
 
 var chatCompletionsOptions = new ChatCompletionOptions()
 {
-    Temperature = 0.7f,
-    MaxOutputTokenCount = 1000
+    MaxOutputTokenCount = 20_000    
 };
+#pragma warning disable AOAI001
+chatCompletionsOptions.SetNewMaxCompletionTokensPropertyEnabled(true);
+#pragma warning restore AOAI001
 
 var response = await client.CompleteChatAsync(
     [
