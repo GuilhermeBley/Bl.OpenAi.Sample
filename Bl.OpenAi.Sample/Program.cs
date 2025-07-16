@@ -29,6 +29,7 @@ chatCompletionsOptions.SetNewMaxCompletionTokensPropertyEnabled(true);
 
 var response = await client.CompleteChatAsync(
     [
+        new SystemChatMessage("Limite as resposta em no máximo 19000 caracteres."),
         new SystemChatMessage("Você é um especialista em veículos e legislação de infrações e débitos de veículos no Brasil. " +
             "Tente dar dicas e resolver problemas para seus clientes."),
         new UserChatMessage(prompt)
