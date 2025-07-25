@@ -10,6 +10,8 @@ string model = config["ModelName"] ?? string.Empty;
 string key = config["OpenAIKey"] ?? string.Empty;
 string url = config["Url"] ?? string.Empty;
 
+
+
 // Create the IChatClient
 var clientOpenAi = new AzureOpenAIClient(
     new Uri(url), 
