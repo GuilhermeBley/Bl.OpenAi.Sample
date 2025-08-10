@@ -1,5 +1,4 @@
-﻿
-using Azure;
+﻿using Azure;
 using Azure.AI.OpenAI;
 using Azure.AI.OpenAI.Chat;
 using Microsoft.Extensions.Configuration;
@@ -18,24 +17,31 @@ if (string.IsNullOrWhiteSpace(model) || string.IsNullOrWhiteSpace(key) || string
 }
 
 var clientOpenAi = new AzureOpenAIClient(
-            new Uri(url),
-            new AzureKeyCredential(key));
+    new Uri(url),
+    new AzureKeyCredential(key));
 
 var client = clientOpenAi.GetChatClient(model);
 
+// Initialize conversation history with system messages
+var conversationHistory = new List<ChatMessage>
+{
+    new SystemChatMessage("Limit answer in 19000 characters."),
+    new SystemChatMessage("You're a dotnet specialist, help people to understand codes."),
+    new SystemChatMessage("If the subject is not about dotnet or microsoft related tools, please type: 'Please, lets talk about .NET and its technologies.'.")
+};
 
 var chatCompletionsOptions = new ChatCompletionOptions()
 {
-    MaxOutputTokenCount = 20_000
+    MaxOutputTokenCount = 20_000,
 };
 #pragma warning disable AOAI001
 chatCompletionsOptions.SetNewMaxCompletionTokensPropertyEnabled(true);
 #pragma warning restore AOAI001
 
-
+Console.WriteLine("Chat started. Type 'exit' to quit or 'clear' to reset the conversation.");
 do
 {
-    Console.Write("> Enter your prompt (or type 'exit' to quit): ");
+    Console.Write("> Enter your prompt: ");
     var prompt = Console.ReadLine() ?? string.Empty;
 
     if (prompt.Equals("exit", StringComparison.OrdinalIgnoreCase))
@@ -45,15 +51,23 @@ do
         return;
     }
 
-     var response = await client.CompleteChatAsync(
-        [
-            new SystemChatMessage("Limit answer in 19000 characters."),
-        new SystemChatMessage("You're an dotnet specialist, help people to understand codes."),
-        new SystemChatMessage("If the subject is not about dotnet or microsoft related tools, please type: 'Please, let talk about .NET and its tecnologies.'."),
-        new UserChatMessage(prompt)
-        ],
-        chatCompletionsOptions);
+    if (prompt.Equals("clear", StringComparison.OrdinalIgnoreCase))
+    {
+        // Reset conversation history while keeping system messages
+        conversationHistory.RemoveAll(m => m is UserChatMessage || m is AssistantChatMessage);
+        Console.WriteLine("Conversation history cleared.");
+        continue;
+    }
+
+    // Add user message to history
+    conversationHistory.Add(new UserChatMessage(prompt));
+
+    var response = await client.CompleteChatAsync(conversationHistory, chatCompletionsOptions);
+
+    // Add assistant response to history
+    var assistantResponse = response.Value.Content[0].Text;
+    conversationHistory.Add(new AssistantChatMessage(assistantResponse));
 
     Console.WriteLine("Response:");
-    Console.WriteLine(string.Join("\n", response.Value.Content.Select(x => x.Text)));
+    Console.WriteLine(assistantResponse);
 } while (true);
