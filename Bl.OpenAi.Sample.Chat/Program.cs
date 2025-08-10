@@ -35,7 +35,7 @@ chatCompletionsOptions.SetNewMaxCompletionTokensPropertyEnabled(true);
 
 do
 {
-    Console.WriteLine("Enter your prompt (or type 'exit' to quit):");
+    Console.Write("> Enter your prompt (or type 'exit' to quit): ");
     var prompt = Console.ReadLine() ?? string.Empty;
 
     if (prompt.Equals("exit", StringComparison.OrdinalIgnoreCase))
