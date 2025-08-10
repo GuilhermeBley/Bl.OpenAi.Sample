@@ -1,10 +1,5 @@
-﻿using Azure;
-using Azure.AI.OpenAI;
-using Azure.AI.OpenAI.Chat;
-using Bl.OpenAi.Sample;
+﻿using Bl.OpenAi.Sample;
 using Microsoft.Extensions.Configuration;
-using OpenAI.Chat;
-using System.Text.Json;
 
 var config = new ConfigurationBuilder().AddUserSecrets<Program>().Build();
 string model = config["ModelName"] ?? string.Empty;

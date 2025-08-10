@@ -5,6 +5,8 @@ VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bl.OpenAi.Sample", "Bl.OpenAi.Sample\Bl.OpenAi.Sample.csproj", "{7E47C359-BFC2-4420-B59F-E99C0B170B7C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bl.OpenAi.Sample.Chat", "Bl.OpenAi.Sample.Chat\Bl.OpenAi.Sample.Chat.csproj", "{5E1B2F13-8E92-4A24-A6BE-2A3B7E77DC23}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,18 @@ Global
 		{7E47C359-BFC2-4420-B59F-E99C0B170B7C}.Release|x64.Build.0 = Release|Any CPU
 		{7E47C359-BFC2-4420-B59F-E99C0B170B7C}.Release|x86.ActiveCfg = Release|Any CPU
 		{7E47C359-BFC2-4420-B59F-E99C0B170B7C}.Release|x86.Build.0 = Release|Any CPU
+		{5E1B2F13-8E92-4A24-A6BE-2A3B7E77DC23}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5E1B2F13-8E92-4A24-A6BE-2A3B7E77DC23}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5E1B2F13-8E92-4A24-A6BE-2A3B7E77DC23}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{5E1B2F13-8E92-4A24-A6BE-2A3B7E77DC23}.Debug|x64.Build.0 = Debug|Any CPU
+		{5E1B2F13-8E92-4A24-A6BE-2A3B7E77DC23}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{5E1B2F13-8E92-4A24-A6BE-2A3B7E77DC23}.Debug|x86.Build.0 = Debug|Any CPU
+		{5E1B2F13-8E92-4A24-A6BE-2A3B7E77DC23}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5E1B2F13-8E92-4A24-A6BE-2A3B7E77DC23}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5E1B2F13-8E92-4A24-A6BE-2A3B7E77DC23}.Release|x64.ActiveCfg = Release|Any CPU
+		{5E1B2F13-8E92-4A24-A6BE-2A3B7E77DC23}.Release|x64.Build.0 = Release|Any CPU
+		{5E1B2F13-8E92-4A24-A6BE-2A3B7E77DC23}.Release|x86.ActiveCfg = Release|Any CPU
+		{5E1B2F13-8E92-4A24-A6BE-2A3B7E77DC23}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
