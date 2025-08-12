@@ -40,9 +40,21 @@ var chatCompletionsOptions = new ChatCompletionOptions()
 {
     MaxOutputTokenCount = 20_000,
 };
-#pragma warning disable AOAI001
+
+//
+// Very important to add an DataSource
+// This will allows you to search through a new and optmized data structure,
+// that can be configured on Azure Portal
+//
+
+#pragma warning disable AOAI001 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
+chatCompletionsOptions.AddDataSource(new AzureSearchChatDataSource()
+{
+    Endpoint = new(azureSearchEndpoint),
+    IndexName = azureSearchIndex,
+    Authentication = DataSourceAuthentication.FromApiKey(azureSearchKey)
+});
 chatCompletionsOptions.SetNewMaxCompletionTokensPropertyEnabled(true);
-#pragma warning restore AOAI001
 
 Console.WriteLine("Chat started. Type 'exit' to quit or 'clear' to reset the conversation.");
 do
@@ -73,7 +85,13 @@ do
     // Add assistant response to history
     var assistantResponse = response.Value.Content[0].Text;
     conversationHistory.Add(new AssistantChatMessage(assistantResponse));
+    
+    var ctx = response.Value.GetMessageContext();
 
     Console.WriteLine("Response:");
     Console.WriteLine(assistantResponse);
+    foreach (var citation in ctx.Citations)
+    {
+        Console.WriteLine($"Citation {citation.Content}. ({citation.Title})");
+    }
 } while (true);
